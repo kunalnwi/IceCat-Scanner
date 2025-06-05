@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scan and Search Icecat</title>
+  <script src="https://unpkg.com/@zxing/browser@latest"></script>
+</head>
+<body>
+  <h2>📱 Scan a Barcode to Search Icecat</h2>
+  <video id="video" width="300" height="200" autoplay></video>
+  <p id="status">Waiting for scan...</p>
+
+  <script>
+    const codeReader = new ZXing.BrowserBarcodeReader();
+    codeReader.decodeFromVideoDevice(null, 'video', (result, err) => {
+      if (result) {
+        document.getElementById('status').innerText = 'Scanned: ' + result.text;
+        const ean = result.text;
+        window.location.href = `https://icecat.biz/en/search?keyword=${ean}`;
+      }
+    });
+  </script>
+</body>
+</html>
